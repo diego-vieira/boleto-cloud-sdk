@@ -1,5 +1,5 @@
 {
-    "name": "millerp/boleto-cloud",
+    "name": "diego-vieira/boleto-cloud",
     "description": "SDK de integraçao com a API Boleto Cloud",
     "type": "project",
     "license": "MIT",
