@@ -373,13 +373,21 @@ class Boleto implements ParserInteface
     {
         $beneficiario = (!empty($this->beneficiario)) ? $this->getBeneficiario()->parser($raiz) : [];
 
+        $extra = [];
+        if (isset($this->numero)) {
+            $extra[$raiz.'.numero'] = $this->numero;
+        }
+
+        if ((int)$this->sequencial) {
+            $extra[$raiz.'.sequencial'] = $this->sequencial;
+        }
+
         return array_merge_recursive([
             $raiz.'.emissao'    => $this->emissao->format('Y-m-d'),
             $raiz.'.vencimento' => $this->vencimento->format('Y-m-d'),
             $raiz.'.documento'  => $this->documento,
-            $raiz.'.numero'     => $this->numero,
             $raiz.'.titulo'     => $this->titulo,
             $raiz.'.valor'      => number_format($this->valor, 2, '.', ''),
-        ], $this->getConta()->parser($raiz), $beneficiario, $this->getPagador()->parser($raiz));
+        ], $extra, $this->getConta()->parser($raiz), $beneficiario, $this->getPagador()->parser($raiz));
     }
 }
